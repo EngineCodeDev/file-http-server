@@ -1,7 +1,6 @@
 package dev.enginecode.inhouse.filehttpserver.service;
 
 import dev.enginecode.inhouse.filehttpserver.exception.ApplicationException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -10,17 +9,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Service
-public class GetFilesListService {
-    @Value("${root.directory}")
-    String rootDirectory;
-    private final Logger logger = Logger.getLogger(GetFilesListService.class.getName());
+public class GetResourcesListService {
+    private final Logger logger = Logger.getLogger(GetResourcesListService.class.getName());
 
     public List<String> getAll(String path) {
-        if (path.startsWith("/")){
-            path = path.substring(1);
-        }
         logger.info("directoryPath: " + path);
-        File dataDirectory = new File(rootDirectory + "/" + path);
+        File dataDirectory = new File(path);
 
         if (dataDirectory.isDirectory()) {
             File[] fileList = dataDirectory.listFiles();

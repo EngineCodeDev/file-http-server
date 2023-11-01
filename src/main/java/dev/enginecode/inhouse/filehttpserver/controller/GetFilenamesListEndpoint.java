@@ -1,6 +1,6 @@
 package dev.enginecode.inhouse.filehttpserver.controller;
 
-import dev.enginecode.inhouse.filehttpserver.handlers.GetResourceRequestHandler;
+import dev.enginecode.inhouse.filehttpserver.handlers.GetResourcesListHandler;
 import dev.enginecode.inhouse.filehttpserver.requests.GetResourceRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class GetFilenamesListEndpoint {
-    private final GetResourceRequestHandler handler;
+    private final GetResourcesListHandler handler;
 
-    public GetFilenamesListEndpoint(GetResourceRequestHandler handler) {
+    public GetFilenamesListEndpoint(GetResourcesListHandler handler) {
         this.handler = handler;
     }
 
