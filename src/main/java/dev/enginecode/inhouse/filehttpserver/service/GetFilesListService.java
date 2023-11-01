@@ -1,5 +1,6 @@
 package dev.enginecode.inhouse.filehttpserver.service;
 
+import dev.enginecode.inhouse.filehttpserver.exception.ApplicationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class GetFilesListService {
                     .toList();
         }
 
-        throw new RuntimeException(String.format("%s is not a valid directory", path));
+        throw new ApplicationException(String.format("%s is not a valid directory", path));
     }
 
 

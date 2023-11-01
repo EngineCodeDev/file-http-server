@@ -1,4 +1,9 @@
 server:
   port: 2500
+  error:
+    include-exception: true
+    include-stacktrace: always
+    include-message: always
+    include-binding-errors: always
 root:
   directory: "data"

@@ -2,19 +2,67 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Files list</title>
+    <title>EngineCode file server</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background: #E7ECEF;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        h1 {
+            background-color: #505E68;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 20px;
+            width: 100%;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            max-width: 650px;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            margin: 40px;
+        }
+        td {
+            padding: 10px;
+            word-break: break-word;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        tr:first-child {
+            background-color: #4A90E2;
+        }
+        a {
+            text-decoration: none;
+            color: #505E68;
+        }
+        a:hover {
+            color: #003366;
+        }
+    </style>
 </head>
 <body>
-<h3>EngineCode file server</h3>
-<ul>
-    <p>
-        <a th:href="${currentPath + '/..'}" th:text="${currentPath + '/..'}"></a>
-    </p>
+<h1>EngineCode file server</h1>
+<table>
+    <tr>
+        <td>
+            <a th:href="${currentPath + '/..'}" th:text="${currentPath + '/..'}"></a>
+        </td>
+    </tr>
     <th:block th:each="file : ${files}">
-        <li>
-            <a th:href="${file}" th:text="${file}"></a>
-        </li>
+        <tr>
+            <td>
+                <a th:href="${file}" th:text="${file}"></a>
+            </td>
+        </tr>
     </th:block>
-</ul>
+</table>
 </body>
 </html>
