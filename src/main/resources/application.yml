@@ -1,0 +1,4 @@
+server:
+  port: 2500
+root:
+  directory: "data"

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Files list</title>
+</head>
+<body>
+<h3>EngineCode file server</h3>
+<ul>
+    <p>
+        <a th:href="${currentPath + '/..'}" th:text="${currentPath + '/..'}"></a>
+    </p>
+    <th:block th:each="file : ${files}">
+        <li>
+            <a th:href="${file}" th:text="${file}"></a>
+        </li>
+    </th:block>
+</ul>
+</body>
+</html>
