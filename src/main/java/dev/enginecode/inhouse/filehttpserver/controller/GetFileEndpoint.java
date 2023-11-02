@@ -18,10 +18,10 @@ public class GetFileEndpoint {
     }
 
     @GetMapping("/download/**")
-    public String downloadFile(Model model, HttpServletRequest request, HttpServletResponse response) {
+    public void downloadFile(Model model, HttpServletRequest request, HttpServletResponse response) {
         String requestURI = request.getRequestURI();
 
-        return handler.handle(
+        handler.handle(
                 new GetResourceRequest(requestURI.substring("/download".length()), model),
                 response
         );
