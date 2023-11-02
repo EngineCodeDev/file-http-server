@@ -20,6 +20,7 @@
             border-radius: 20px;
             width: 100%;
             text-align: center;
+            margin-bottom: 45px;
         }
         table {
             width: 100%;
@@ -46,10 +47,30 @@
         a:hover {
             color: #003366;
         }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
 <h1>EngineCode file server</h1>
+<form th:action="${'/upload' + currentPath}" method="post" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="hidden" name="currentPath" th:value="${currentPath}" />
+    <input type="submit" value="Upload">
+</form>
 <table>
     <tr>
         <td>
