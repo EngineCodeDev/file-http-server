@@ -8,13 +8,13 @@
       background: #E7ECEF;
       margin: 0;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: flex-start;
       min-height: 100vh;
     }
     table {
-      width: 100%;
-      max-width: 1000px;
+      width: 50%;
+      max-width: 500px;
       border-collapse: collapse;
       background-color: #ffffff;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -23,6 +23,7 @@
     }
     th, td {
       text-align: left;
+      align-items: center;
       padding: 10px;
       word-break: break-word;
       vertical-align: top;
@@ -38,10 +39,6 @@
     tr:last-child th:first-child {
       border-bottom-left-radius: 20px;
     }
-    tr:hover {
-      background-color: #BFE1FF;
-      transition: background-color 0.3s ease;
-    }
     pre {
       white-space: pre-wrap;
       margin: 0;
@@ -52,9 +49,6 @@
 <table>
   <tr><th>Error Message</th><td th:text="${message}"></td></tr>
   <tr><th>Status Code</th><td th:text="${status}"></td></tr>
-  <tr><th>Exception</th><td th:text="${exception}"></td></tr>
-  <tr><th>Stacktrace</th><td><pre th:text="${trace}"></pre></td></tr>
-  <tr><th>Binding Errors</th><td th:text="${errors}"></td></tr>
 </table>
 </body>
 </html>

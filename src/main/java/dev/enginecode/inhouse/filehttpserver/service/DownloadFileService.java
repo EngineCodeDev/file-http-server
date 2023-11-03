@@ -30,8 +30,10 @@ public class DownloadFileService {
             response.flushBuffer();
             inputStream.close();
         } catch (IOException e) {
-            logger.info(String.format("Error during downloading file %s", path));
-            throw new ApplicationException("IOException caught: " + e.getMessage());
+            logger.info(String.format("IOException caught during downloading file %s", path));
+            logger.info(String.format("IOException message: %s", e.getMessage()));
+            e.printStackTrace();
+            throw new ApplicationException(String.format("Cannot download resource %s", path));
         }
     }
 

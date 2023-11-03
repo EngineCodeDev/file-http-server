@@ -24,6 +24,7 @@ public class GetResourcesListService {
                     .toList();
         }
 
+        logger.info(String.format("Error during reading resources in %s", path));
         throw new ApplicationException(String.format("%s is not a valid directory", path));
     }
 

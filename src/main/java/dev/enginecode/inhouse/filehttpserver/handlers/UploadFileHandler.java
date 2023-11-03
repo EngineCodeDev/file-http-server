@@ -24,8 +24,10 @@ public class UploadFileHandler {
             byte[] fileBytes = file.getBytes();
             Files.write(Paths.get(uploadedFileName), fileBytes);
         } catch (IOException e) {
+            logger.info(String.format("IOException caught during uploading file to %s", uploadedFileName));
+            logger.info(String.format("IOException message: %s", e.getMessage()));
             e.printStackTrace();
-            throw new ApplicationException("IOException caught");
+            throw new ApplicationException("Cannot upload a file");
         }
         logger.info("File written to" + currentPath);
     }

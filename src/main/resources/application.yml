@@ -2,9 +2,9 @@ server:
   port: 2500
   error:
     include-exception: true
-    include-stacktrace: always
+    include-stacktrace: never
     include-message: always
-    include-binding-errors: always
+    include-binding-errors: never
   tomcat:
     max-swallow-size: 100MB
 spring:
