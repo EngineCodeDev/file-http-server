@@ -9,7 +9,7 @@ group = "dev.enginecode.inhouse"
 version = "0.0.1"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 repositories {
@@ -19,6 +19,10 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web:3.1.5")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf:3.1.5")
+
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.1.5")
+    testImplementation("org.mockito:mockito-core:5.6.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.6.0")
 }
 
 tasks.withType<Test> {
