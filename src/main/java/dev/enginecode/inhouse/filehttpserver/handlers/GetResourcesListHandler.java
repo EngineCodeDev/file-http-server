@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -33,17 +37,30 @@ public class GetResourcesListHandler {
             return String.format("redirect:/download/%s%s", rootDirectory, requestURI);
         }
 
-        List<String> filePaths = filesListService.getAll(rootDirectory + requestURI)
+        List<String> fileNames = new ArrayList<>();
+        List<String> folderNames = new ArrayList<>();
+
+        filesListService.getAll(rootDirectory + requestURI)
                 .stream()
-                .map(filename -> requestURI + "/" + filename).toList();
+//                .map(itemName -> requestURI + "/" + itemName)
+                .map(item -> isDirectory(rootDirectory + requestURI + "/" + item) ? folderNames.add(item) : fileNames.add(item)).toList();
 
         request.model().addAttribute("currentPath", requestURI);
-        request.model().addAttribute("files", filePaths);
+        request.model().addAttribute("folders", folderNames);
+        request.model().addAttribute("files", fileNames);
 
         return "files-list";
     }
 
-
+    private static boolean isDirectory(String itemName) {
+        try {
+            Path path = Paths.get(itemName);
+            return Files.isDirectory(path);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     private static String getProcessedURI(String requestURI) {
         String output = requestURI.replaceAll("/+$", "");

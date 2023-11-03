@@ -32,6 +32,7 @@
             margin: 40px;
         }
         td {
+            align-items: center;
             padding: 10px;
             word-break: break-word;
             border-top-left-radius: 20px;
@@ -62,6 +63,37 @@
             border-radius: 5px;
             border: 1px solid #ccc;
         }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .row-text {
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+        }
+        .center-td {
+            display: flex;
+            align-items: center;
+        }
+        .hidden-input {
+            display: none;
+        }
+        .form-container {
+            display: flex;
+        }
+        .form-container input[type="text"] {
+            flex: 1;
+        }
+        .form-separator {
+            margin-top: 20px;
+        }
+        .button {
+            padding: 12px 20px;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -74,13 +106,23 @@
 <table>
     <tr>
         <td>
-            <a th:href="${currentPath + '/..'}" th:text="${currentPath + '/..'}"></a>
+            <img src="/img/folder.png" alt="Folder Icon" width="25" height="25">
+            <a class="fow-text" th:href="${currentPath + '/..'}" th:text="${currentPath + '/..'}"></a>
         </td>
     </tr>
+    <th:block th:each="folder : ${folders}">
+        <tr>
+            <td class="center-td">
+                <img src="/img/folder.png" alt="Folder Icon" width="25" height="25">
+                <a class="row-text" th:href="${currentPath + '/' + folder}" th:text="${folder}"></a>
+            </td>
+        </tr>
+    </th:block>
     <th:block th:each="file : ${files}">
         <tr>
-            <td>
-                <a th:href="${file}" th:text="${file}"></a>
+            <td class="center-td">
+                <img src="/img/file.png" alt="File Icon" width="25" height="25">
+                <a class="row-text" th:href="${currentPath + '/' + file}" th:text="${file}"></a>
             </td>
         </tr>
     </th:block>
