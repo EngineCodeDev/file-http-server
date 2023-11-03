@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,6 +21,11 @@ public class UploadFileHandler {
         String uploadedFileName = rootDirectory + currentPath + "/" + file.getOriginalFilename();
         logger.info("Started handling POST request for uploading file to: " + uploadedFileName);
 
+        if (exists(uploadedFileName)) {
+            logger.info(String.format("Error during uploading file %s", uploadedFileName));
+            throw new ApplicationException(String.format("File %s already exists", file.getOriginalFilename()));
+        }
+
         try {
             byte[] fileBytes = file.getBytes();
             Files.write(Paths.get(uploadedFileName), fileBytes);
@@ -32,4 +38,8 @@ public class UploadFileHandler {
         logger.info("File written to" + currentPath);
     }
 
+    private static boolean exists(String filePath) {
+        File file = new File(filePath);
+        return file.exists() && file.isFile();
+    }
 }
