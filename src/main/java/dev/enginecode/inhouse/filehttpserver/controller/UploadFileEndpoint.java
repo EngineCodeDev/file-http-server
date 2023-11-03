@@ -1,7 +1,6 @@
 package dev.enginecode.inhouse.filehttpserver.controller;
 
 import dev.enginecode.inhouse.filehttpserver.handlers.UploadFileHandler;
-import dev.enginecode.inhouse.filehttpserver.requests.UploadFileRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +21,7 @@ public class UploadFileEndpoint {
 
     @PostMapping("/upload/**")
     public RedirectView uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("currentPath") String currentPath) {
-        handler.handle(new UploadFileRequest(currentPath, file));
+        handler.handle(currentPath, file);
         return new RedirectView(currentPath);
     }
 

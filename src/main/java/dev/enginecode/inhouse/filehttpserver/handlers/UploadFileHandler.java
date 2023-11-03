@@ -1,9 +1,9 @@
 package dev.enginecode.inhouse.filehttpserver.handlers;
 
 import dev.enginecode.inhouse.filehttpserver.exception.ApplicationException;
-import dev.enginecode.inhouse.filehttpserver.requests.UploadFileRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,18 +16,18 @@ public class UploadFileHandler {
     String rootDirectory;
     private final Logger logger = Logger.getLogger(UploadFileHandler.class.getName());
 
-    public void handle(UploadFileRequest request) {
-        String uploadedFileName = rootDirectory + request.currentPath() + "/" + request.file().getOriginalFilename();
+    public void handle(String currentPath, MultipartFile file) {
+        String uploadedFileName = rootDirectory + currentPath + "/" + file.getOriginalFilename();
         logger.info("Started handling POST request for uploading file to: " + uploadedFileName);
 
         try {
-            byte[] fileBytes = request.file().getBytes();
+            byte[] fileBytes = file.getBytes();
             Files.write(Paths.get(uploadedFileName), fileBytes);
         } catch (IOException e) {
             e.printStackTrace();
             throw new ApplicationException("IOException caught");
         }
-        logger.info("File written to" + request.currentPath());
+        logger.info("File written to" + currentPath);
     }
 
 }

@@ -1,11 +1,9 @@
 package dev.enginecode.inhouse.filehttpserver.controller;
 
 import dev.enginecode.inhouse.filehttpserver.handlers.GetFileHandler;
-import dev.enginecode.inhouse.filehttpserver.requests.GetResourceRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -18,13 +16,10 @@ public class GetFileEndpoint {
     }
 
     @GetMapping("/download/**")
-    public void downloadFile(Model model, HttpServletRequest request, HttpServletResponse response) {
+    public void downloadFile(HttpServletRequest request, HttpServletResponse response) {
         String requestURI = request.getRequestURI();
 
-        handler.handle(
-                new GetResourceRequest(requestURI.substring("/download".length()), model),
-                response
-        );
+        handler.handle(requestURI.substring("/download".length()), response);
     }
 
 

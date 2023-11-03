@@ -1,9 +1,9 @@
 package dev.enginecode.inhouse.filehttpserver.handlers;
 
-import dev.enginecode.inhouse.filehttpserver.requests.GetResourceRequest;
 import dev.enginecode.inhouse.filehttpserver.service.GetResourcesListService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -26,30 +26,31 @@ public class GetResourcesListHandler {
         this.filesListService = filesListService;
     }
 
-    public String handle(GetResourceRequest request) {
-        logger.info("Started handling GET request with request URI: " + request.requestURI());
+    public String handle(String requestURI, Model model) {
+        String pathFromRoot = getProcessedURI(requestURI);
+        logger.info("Started handling GET request with request URI: " + requestURI);
 
-        String requestURI = getProcessedURI(request.requestURI());
-
-        File file = new File(rootDirectory + requestURI);
-        if (file.exists() && file.isFile()) {
-            logger.info(String.format("Redirecting to /download/%s%s", rootDirectory, requestURI));
-            return String.format("redirect:/download/%s%s", rootDirectory, requestURI);
+        if (isFile((rootDirectory + pathFromRoot))) {
+            logger.info(String.format("Redirecting to /download/%s%s", rootDirectory, pathFromRoot));
+            return String.format("redirect:/download/%s%s", rootDirectory, pathFromRoot);
         }
 
         List<String> fileNames = new ArrayList<>();
         List<String> folderNames = new ArrayList<>();
-
-        filesListService.getAll(rootDirectory + requestURI)
+        filesListService.getAll(rootDirectory + pathFromRoot)
                 .stream()
-//                .map(itemName -> requestURI + "/" + itemName)
-                .map(item -> isDirectory(rootDirectory + requestURI + "/" + item) ? folderNames.add(item) : fileNames.add(item)).toList();
+                .map(item -> isDirectory(rootDirectory + pathFromRoot + "/" + item) ? folderNames.add(item) : fileNames.add(item)).toList();
 
-        request.model().addAttribute("currentPath", requestURI);
-        request.model().addAttribute("folders", folderNames);
-        request.model().addAttribute("files", fileNames);
-
+        model.addAttribute("currentPath", pathFromRoot);
+        model.addAttribute("folders", folderNames);
+        model.addAttribute("files", fileNames);
         return "files-list";
+    }
+
+
+    private static boolean isFile(String path) {
+        File file = new File(path);
+        return file.exists() && file.isFile();
     }
 
     private static boolean isDirectory(String itemName) {
