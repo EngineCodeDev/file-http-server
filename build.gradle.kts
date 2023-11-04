@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     java
     id("org.springframework.boot") version "3.1.5"
@@ -28,6 +30,16 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+val copyJar by tasks.creating(Copy::class) {
+    from(tasks.bootJar.get().outputs.files)
+    into(file("../test"))
+
+    dependsOn("bootJar")
+}
+
+val bootJar by tasks.getting(BootJar::class)
+bootJar.finalizedBy(copyJar)
 
 publishing {
     publications {
