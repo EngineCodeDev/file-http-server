@@ -1,9 +1,9 @@
 package dev.enginecode.inhouse.filehttpserver.handlers;
 
+import dev.enginecode.inhouse.filehttpserver.controller.GetResourcesNamesListEndpoint.RequestPathContent;
 import dev.enginecode.inhouse.filehttpserver.service.GetResourcesListService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 import java.io.File;
 import java.net.URLDecoder;
@@ -26,25 +26,24 @@ public class GetResourcesListHandler {
         this.filesListService = filesListService;
     }
 
-    public String handle(String requestURI, Model model) {
+    public RequestPathContent handle(String requestURI) {
         String pathFromRoot = getProcessedURI(requestURI);
         logger.info("Started handling GET request with request URI: " + requestURI);
 
         if (isFile((rootDirectory + pathFromRoot))) {
-            logger.info(String.format("Redirecting to /download/%s%s", rootDirectory, pathFromRoot));
-            return String.format("redirect:/download/%s%s", rootDirectory, pathFromRoot);
+            logger.info(String.format("Resource under path /%s is file, returning without content", pathFromRoot));
+            return RequestPathContent.asFile(pathFromRoot);
         }
 
         List<String> fileNames = new ArrayList<>();
         List<String> folderNames = new ArrayList<>();
         filesListService.getAll(rootDirectory + pathFromRoot)
                 .stream()
-                .map(item -> isDirectory(rootDirectory + pathFromRoot + "/" + item) ? folderNames.add(item) : fileNames.add(item)).toList();
+                .map(item -> isDirectory(rootDirectory + pathFromRoot + "/" + item) ? folderNames.add(item) : fileNames.add(item))
+                .forEach(x -> {});
 
-        model.addAttribute("currentPath", pathFromRoot);
-        model.addAttribute("folders", folderNames);
-        model.addAttribute("files", fileNames);
-        return "files-list";
+        return RequestPathContent.of(pathFromRoot, folderNames, fileNames);
+
     }
 
 
