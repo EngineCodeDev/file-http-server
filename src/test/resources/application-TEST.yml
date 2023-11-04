@@ -1,0 +1,15 @@
+server:
+  error:
+    include-exception: true
+    include-stacktrace: never
+    include-message: always
+    include-binding-errors: never
+  tomcat:
+    max-swallow-size: 100MB
+spring:
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+root:
+  directory: "src/test/resources/test-root-directory"

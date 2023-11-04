@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 @Component
 public class GetResourcesListHandler {
     @Value("${root.directory}")
-    String rootDirectory;
+    private String rootDirectory;
     private final Logger logger = Logger.getLogger(GetResourcesListHandler.class.getName());
     private final GetResourcesListService filesListService;
 

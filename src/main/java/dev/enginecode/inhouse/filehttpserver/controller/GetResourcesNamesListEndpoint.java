@@ -13,7 +13,7 @@ import java.util.List;
 @Controller
 public class GetResourcesNamesListEndpoint {
     @Value("${root.directory}")
-    String rootDirectory;
+    private String rootDirectory;
     private final GetResourcesListHandler handler;
 
     public GetResourcesNamesListEndpoint(GetResourcesListHandler handler) {
